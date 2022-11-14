@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable Style/Documentation
 class LinkedList
   attr_accessor :head, :tail
 
@@ -10,18 +13,19 @@ class LinkedList
     node = Node.new(value)
 
     if @head.nil? && @tail.nil?
-      @head, @tail = node, node
+      @head = node
     else
       @tail.next_node = node
-      @tail = node
     end
+    @tail = node
   end
 
   def prepend(value)
     node = Node.new(value)
 
     if @head.nil? && @tail.nil?
-      @head, @tail = node, node
+      @head = node
+      @tail = node
     else
       node.next_node = @head
       @head = node
@@ -32,7 +36,7 @@ class LinkedList
     count = 0
     node = @head
 
-    until node == nil
+    until node.nil?
       node = node.next_node
       count += 1
     end
@@ -85,16 +89,16 @@ class LinkedList
       result += "( #{node.value} ) -> "
       node = node.next_node
     end
-    result + 'nil'
+    "#{result} + nil"
   end
 
   def insert_at(value, index)
-    index == 0 && prepend(value) && return
+    index.zero? && prepend(value) && return
     index == -1 && append(value) && return
 
     node = Node.new(value)
     node.next_node = at(index)
-     at(index - 1).next_node = node
+    at(index - 1).next_node = node
   end
 
   def remove_at(index)
@@ -104,7 +108,7 @@ class LinkedList
       pop && return
     else
       at(index - 1).next_node = at(index + 1)
-   end
+    end
   end
 end
 
@@ -116,6 +120,7 @@ class Node
     @next_node = next_node
   end
 end
+# rubocop:enable Style/Documentation
 
 linked_list = LinkedList.new
 linked_list.append(1)
