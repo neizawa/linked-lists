@@ -38,6 +38,55 @@ class LinkedList
     end
     count
   end
+
+  def at(index)
+    return @head.value if index.zero?
+
+    node = @head
+    index.negative? && index = size - index.abs
+    index.times { node = node.next_node }
+    node
+  end
+
+  def pop
+    @tail = at(-2)
+    @tail.next_node = nil
+  end
+
+  def contains?(value)
+    node = @head
+
+    until node.nil?
+      return true if value == node.value
+
+      node = node.next_node
+    end
+    false
+  end
+
+  def find(value)
+    node = @head
+    index = 0
+
+    until node.nil?
+      return index if value == node.value
+
+      node = node.next_node
+      index += 1
+    end
+    nil
+  end
+
+  def to_s
+    node = @head
+    result = ''
+
+    until node.nil?
+      result += "( #{node.value} ) -> "
+      node = node.next_node
+    end
+    result + 'nil'
+  end
 end
 
 class Node
@@ -52,7 +101,17 @@ end
 linked_list = LinkedList.new
 linked_list.append(1)
 linked_list.append(6)
-linked_list.prepend(7)
+linked_list.prepend(3)
+linked_list.prepend(91)
+linked_list.prepend(123)
+linked_list.prepend(87)
 linked_list.prepend(9)
+linked_list.pop
 
+p linked_list.head
+p linked_list.tail
 p linked_list.size
+p linked_list.at(-3)
+p linked_list.contains?(1)
+p linked_list.find(123)
+p linked_list.to_s
