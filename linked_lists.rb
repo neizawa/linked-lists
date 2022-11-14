@@ -87,6 +87,25 @@ class LinkedList
     end
     result + 'nil'
   end
+
+  def insert_at(value, index)
+    index == 0 && prepend(value) && return
+    index == -1 && append(value) && return
+
+    node = Node.new(value)
+    node.next_node = at(index)
+     at(index - 1).next_node = node
+  end
+
+  def remove_at(index)
+    if index.zero?
+      @head = at(index + 1)
+    elsif index == -1
+      pop && return
+    else
+      at(index - 1).next_node = at(index + 1)
+   end
+  end
 end
 
 class Node
@@ -107,6 +126,8 @@ linked_list.prepend(123)
 linked_list.prepend(87)
 linked_list.prepend(9)
 linked_list.pop
+linked_list.insert_at(727, 2)
+linked_list.remove_at(0)
 
 p linked_list.head
 p linked_list.tail
